@@ -1,0 +1,574 @@
+openapi: 3.0.0
+info:
+  title: API Cliente Feliz
+  description: "Documentacion de la API RESTful para gestion de usuarios, ofertas laborales, postulaciones y reportes."
+  version: 1.0.0
+servers:
+- url: http://localhost/cliente_feliz/index.php/
+paths:
+  /login:
+    post:
+      summary: "Iniciar sesion de usuario"
+      description: "Permite a un usuario iniciar sesion."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: "Login exitoso"
+        '400':
+          description: "Faltan datos"
+        '401':
+          description: "Credenciales invalidas"
+  /usuario/registro:
+    post:
+      summary: Registrar nuevo usuario
+      description: "Permite registrar un nuevo usuario."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                apellido:
+                  type: string
+                email:
+                  type: string
+                "cpassword":
+                  type: string
+                rol:
+                  type: string
+      responses:
+        '201':
+          description: "Usuario registrado correctamente"
+        '400':
+          description: "Datos faltantes o invalidos"
+        '409':
+          description: "Email duplicado"
+        '500':
+          description: "Error al registrar el usuario"
+  /usuario/listar:
+    get:
+      summary: Listar todos los usuarios registrados
+      description: "Devuelve una lista de todos los usuarios registrados."
+      responses:
+        '200':
+          description: "Lista de usuarios."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nombre:
+                      type: string
+                    apellido:
+                      type: string
+                    email:
+                      type: string
+                    rol:
+                      type: string
+                    estado:
+                      type: string
+                      enum:
+                      - activo
+                      - inactivo
+                    fecha_registro:
+                      type: string
+                      format: date-time
+        '500':
+          description: "Error al obtener los usuarios"
+  /ofertas/crear:
+    post:
+      summary: Crear una nueva oferta laboral
+      description: "Permite a un reclutador crear una nueva oferta laboral."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                descripcion:
+                  type: string
+                ubicacion:
+                  type: string
+                salario:
+                  type: number
+                tipo_contrato:
+                  type: string
+                fecha_cierre:
+                  type: string
+                  format: date
+                reclutador_id:
+                  type: integer
+      responses:
+        '201':
+          description: "Oferta creada correctamente"
+        '400':
+          description: "Datos faltantes o invalidos"
+        '403':
+          description: "Solo usuarios con rol Reclutador pueden crear ofertas"
+        '500':
+          description: "No se pudo crear la oferta"
+  /ofertas/todas:
+    get:
+      summary: Listar todas las ofertas
+      description: "Devuelve una lista de todas las ofertas laborales."
+      responses:
+        '200':
+          description: Lista de ofertas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    titulo:
+                      type: string
+                    descripcion:
+                      type: string
+                    ubicacion:
+                      type: string
+                    salario:
+                      type: number
+                    tipo_contrato:
+                      type: string
+                    fecha_publicacion:
+                      type: string
+                      format: date-time
+                    fecha_cierre:
+                      type: string
+                      format: date
+                    reclutador_id:
+                      type: integer
+        '500':
+          description: "Error al obtener la oferta"
+  /ofertas/activas:
+    get:
+      summary: Listar ofertas activas
+      description: "Devuelve una lista de ofertas laborales activas."
+      responses:
+        '200':
+          description: "Lista de ofertas activas"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    titulo:
+                      type: string
+                    descripcion:
+                      type: string
+                    ubicacion:
+                      type: string
+                    salario:
+                      type: number
+                    tipo_contrato:
+                      type: string
+                    fecha_publicacion:
+                      type: string
+                      format: date-time
+                    fecha_cierre:
+                      type: string
+                      format: date
+                    estado:
+                      type: string
+                      enum:
+                      - activo
+                      - inactivo
+                    reclutador_id:
+                      type: integer
+        '404':
+          description: "No hay ofertas activas disponibles"
+        '500':
+          description: "Error al obtener las ofertas activas"
+  /ofertas/editar/{id}:
+    put:
+      summary: Editar una oferta existente
+      description: "Permite editar los datos de una oferta laboral existente"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la oferta a editar"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                descripcion:
+                  type: string
+                ubicacion:
+                  type: string
+                salario:
+                  type: number
+                tipo_contrato:
+                  type: string
+                fecha_cierre:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: "Oferta actualizada correctamente"
+        '500':
+          description: "No se pudo actualizar la oferta"
+  /ofertas/desactivar/{id}:
+    patch:
+      summary: Dar de baja una oferta
+      description: "Cambia el estado de una oferta laboral a Baja."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la oferta a dar de baja"
+      responses:
+        '200':
+          description: "Oferta dada de baja correctamente"
+        '404':
+          description: "Oferta no encontrada"
+        '500':
+          description: "Error al desactivar la oferta"
+  /ofertas/reclutador/{id}:
+    get:
+      summary: Obtener ofertas por reclutador
+      description: "Devuelve una lista de ofertas laborales creadas por un reclutador especefico."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID del reclutador"
+      responses:
+        '200':
+          description: "Lista de ofertas del reclutador"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    titulo:
+                      type: string
+                    descripcion:
+                      type: string
+                    ubicacion:
+                      type: string
+                    salario:
+                      type: number
+                    tipo_contrato:
+                      type: string
+                    fecha_publicacion:
+                      type: string
+                      format: date-time
+                    fecha_cierre:
+                      type: string
+                      format: date
+                    estado:
+                      type: string
+                      enum:
+                      - activo
+                      - inactivo
+                    reclutador_id:
+                      type: integer
+        '403':
+          description: "Usuario no tiene rol de reclutador"
+        '404':
+          description: "No hay ofertas asignadas al reclutador"
+        '500':
+          description: "Error al obtener las ofertas del reclutador"
+  /postulacion:
+    post:
+      summary: "Crear una nueva postulacion"
+      description: "Permite a un candidato postularse a una oferta laboral."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                candidato_id:
+                  type: integer
+                  description: "ID del candidato que realiza la postulacion"
+                oferta_laboral_id:
+                  type: integer
+                  description: "ID de la oferta laboral a la que se postula"
+              required:
+                - candidato_id
+                - oferta_laboral_id
+      responses:
+        '201':
+          description: "Postulacion registrada correctamente"
+        '400':
+          description: "Faltan datos obligatorios (candidato_id y oferta_laboral_id)"
+        '403':
+          description: "Solo los usuarios con rol Candidato pueden postularse 
+          - Solo se puede postular a ofertas laborales en estado Vigente"
+        '404':
+          description: "La oferta laboral no existe"
+        '409':
+          description: "El candidato ya esta postulando a esta oferta"
+        '500':
+          description: "Error interno al registrar la postulacion"
+  /postulaciones/candidato/{id}:
+    get:
+      summary: Ver postulaciones de un candidato
+      description: "Devuelve una lista de todas las postulaciones realizadas por un candidato especifico."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID del candidato"
+      responses:
+        '200':
+          description: "Lista de postulaciones del candidato"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "ID de la postulacion"
+                    oferta_id:
+                      type: integer
+                      description: ID de la oferta laboral
+                    fecha_postulacion:
+                      type: string
+                      format: date
+                      description: "Fecha en la que se realizo la postulacion"
+        '403':
+          description: "Solo los usuarios con rol Candidato pueden ver sus postulaciones"
+        '404':
+          description: "El candidato no tiene postulaciones registradas"
+  /estado-postulacion:
+    get:
+      summary: "Listar estados validos de postulacion"
+      description: "Devuelve una lista de todos los estados permitidos para las postulaciones."
+      responses:
+        '200':
+          description: "Lista de estados validos"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estados_postulacion:
+                    type: array
+                    items:
+                      type: string
+                      description: "Estado permitido"
+  /estado-postulacion/cambiar/{id}:
+    put:
+      summary: "Cambiar estado de una postulacion"
+      description: "Permite cambiar el estado de una postulacion existente."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la postulacion a modificar"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                estado:
+                  type: string
+                  description: "Nuevo estado de la postulacion"
+              required:
+              - estado
+      responses:
+        '200':
+          description: "Estado actualizado correctamente"
+        '400':
+          description: "Estado no valido"
+        '404':
+          description: "La postulacion no existe"
+        '500':
+          description: "Error al actualizar el estado"
+  /comentario/agregar/{id}:
+    patch:
+      summary: "Agregar comentario a postulacion"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comentario:
+                  type: string
+                  description: "Texto del comentario a agregar"
+              required:
+              - comentario
+      responses:
+        '200':
+          description: "Comentario agregado correctamente"
+        '400':
+          description: "Comentario requerido"
+        '404':
+          description: "La postulacion no existe"
+        '500':
+          description: "Error al agregar el comentario"
+  /comentario/eliminar/{id}:
+    patch:
+      summary: "Eliminar comentario de postulacion"
+      description: "Permite eliminar un comentario asociado a una postulacion existente."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la postulacion de la que se eliminara el comentario"
+      responses:
+        '200':
+          description: "Comentario eliminado correctamente"
+        '404':
+          description: "La postulacion no existe"
+        '500':
+          description: "Error al eliminar el comentario"
+  /reporte/postulantes/oferta/{id}:
+    get:
+      summary: Listar postulantes por oferta
+      description: "Devuelve una lista de postulantes asociados a una oferta laboral especifica."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la oferta laboral"
+      responses:
+        '200':
+          description: "Lista de postulantes por oferta"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    candidato_id:
+                      type: integer
+                      description: "ID del candidato"
+                    nombre:
+                      type: string
+                      description: "Nombre del candidato"
+                    apellido:
+                      type: string
+                      description: "Apellido del candidato"
+        '404':
+          description: "La oferta laboral no existe"
+  /reporte/total/oferta/{id}:
+    get:
+      summary: Total de postulaciones por oferta
+      description: "Devuelve el numero total de postulaciones realizadas para una oferta laboral especifica."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID de la oferta laboral"
+      responses:
+        '200':
+          description: "Total de postulaciones por oferta"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_postulaciones:
+                    type: integer
+                    description: "Numero total de postulaciones"
+        '404':
+          description: "La oferta laboral no existe"
+  /reporte/postulaciones/reclutador/{id}:
+    get:
+      summary: Listar postulaciones por reclutador
+      description: "Devuelve una lista de postulaciones asociadas a un reclutador especifico."
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: "ID del reclutador"
+      responses:
+        '200':
+          description: "Lista de postulaciones por reclutador"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reclutador:
+                    type: string
+                    description: "Nombre completo del reclutador"
+                  postulaciones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        oferta_id:
+                          type: integer
+                          description: "ID de la oferta laboral"
+                        titulo:
+                          type: string
+                          description: "Titulo de la oferta laboral"
+                        total_postulantes:
+                          type: integer
+                          description: "Numero total de postulantes"
+        '404':
+          description: "Reclutador no encontrado"

@@ -1,0 +1,506 @@
+{
+	"info": {
+		"_postman_id": "a6b06cfb-70f6-4b3f-972d-7825b293e519",
+		"name": "Evaluacion 2 Cliente Feliz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43847820",
+		"_collection_link": "https://loreeee.postman.co/workspace/Loreeee's-Workspace~068989c8-b1bb-4d19-89f1-7bbcc9c1eca3/collection/43847820-a6b06cfb-70f6-4b3f-972d-7825b293e519?action=share&source=collection_link&creator=43847820"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"loretto@herrera.cl\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Loretto\",\r\n  \"apellido\": \"Herrera\",\r\n  \"email\": \"loretto@herrera.cl\",\r\n  \"password\": \"123456\",\r\n  \"rol\": \"Candidato\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/usuario/registro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"usuario",
+								"registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/usuario/listar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"usuario",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oferta Laboral",
+			"item": [
+				{
+					"name": "Crear Oferta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Ingeniero DevOps Jr\",\r\n  \"descripcion\": \"Responsable de infraestructura TI\",\r\n  \"ubicacion\": \"Santiago\",\r\n  \"salario\": 900000,\r\n  \"tipo_contrato\": \"Indefinido\",\r\n  \"fecha_cierre\": \"2025-06-01\",\r\n  \"reclutador_id\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/crear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Oferta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Ingeniero de Sistemas\",\r\n  \"descripcion\": \"Responsable de infraestructura y seguridad\",\r\n  \"ubicacion\": \"Remoto\",\r\n  \"salario\": 1100000,\r\n  \"tipo_contrato\": \"Indefinido\",\r\n  \"fecha_cierre\": \"2025-06-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/editar/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"editar",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desactivar oferta",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/desactivar/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"desactivar",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todas las ofertas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/todas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"todas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ofertas por reclutador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/reclutador/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"reclutador",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar ofertas activas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Analista QA\",\r\n  \"descripcion\": \"Responsable de pruebas funcionales\",\r\n  \"ubicacion\": \"Santiago\",\r\n  \"salario\": 900000,\r\n  \"tipo_contrato\": \"Indefinido\",\r\n  \"fecha_cierre\": \"2025-06-01\",\r\n  \"reclutador_id\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/ofertas/activas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"ofertas",
+								"activas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Postulacion",
+			"item": [
+				{
+					"name": "Postular",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"candidato_id\": 8,\r\n  \"oferta_laboral_id\": 9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/postulacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"postulacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver postulación y comentarios para candidato",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Analista QA\",\r\n  \"descripcion\": \"Responsable de pruebas funcionales\",\r\n  \"ubicacion\": \"Santiago\",\r\n  \"salario\": 900000,\r\n  \"tipo_contrato\": \"Indefinido\",\r\n  \"fecha_cierre\": \"2025-06-01\",\r\n  \"reclutador_id\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/postulaciones/candidato/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"postulaciones",
+								"candidato",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estados Postulacion",
+			"item": [
+				{
+					"name": "Lista estado de postulacion vigentes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/estado-postulacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"estado-postulacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar estado por id postulacion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estado\": \"Descartado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/estado-postulacion/cambiar/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"estado-postulacion",
+								"cambiar",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comentarios",
+			"item": [
+				{
+					"name": "Agregar comentario a postulacion por id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comentario\": \"No asistió a entrevista.\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/comentario/agregar/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"comentario",
+								"agregar",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar comentario a postulacion por id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estado\": \"Entrevista Psicológica\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/comentario/eliminar/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"comentario",
+								"eliminar",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Postulantes por oferta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/reporte/postulantes/oferta/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"reporte",
+								"postulantes",
+								"oferta",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total postulaciones por oferta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php/reporte/total/oferta/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"reporte",
+								"total",
+								"oferta",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Postulantes por Reclutador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/cliente_feliz/index.php//reporte/postulaciones/reclutador/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"cliente_feliz",
+								"index.php",
+								"",
+								"reporte",
+								"postulaciones",
+								"reclutador",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
